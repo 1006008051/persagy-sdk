@@ -1,18 +1,18 @@
-# web-sdk
+# persagy-sdk
 
-`微信、钉钉常用的api服务`
+`提供微信、钉钉常用的api服务`
 
 install
 
 ```
-npm install web-sdk
+npm install persagy-sdk
 ```
 ## 钉钉
 
 usage
 
 ```
-import {dingding} from "web-sdk"
+import {dingding} from "persagy-sdk"
 
 实例化sdk类
 const dd = new dingding(appKey, appSecret)
@@ -40,13 +40,13 @@ getUser(code: string, token?: string)
 ```
 import * as dd from 'dingtalk-jsapi';
 const corpId = 'xx'; // 企业corpId
-dd.ready(function () {
+dd.ready(()=>{
     dd.runtime.permission.requestAuthCode({
         corpId: corpId,
-        onSuccess: function (info) {
+        onSuccess:  (info)=> {
             const {code} = info;
         },
-        onFail: function (err) {
+        onFail:  (err)=> {
             console.log(err)
         }
     });
@@ -58,7 +58,7 @@ dd.ready(function () {
 usage
 
 ```
-import {weixin} from "web-sdk"
+import {weixin} from "persagy-sdk"
 
 实例化sdk类
 const wx = new weixin(appId, appSecret)
