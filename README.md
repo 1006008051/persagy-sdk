@@ -76,7 +76,10 @@ getAccessToken(): Promise<IToken>
 getUser(code: string)
 ```
 #####  前端获取code代码示例
+
+```
 公众号里设置菜单地址为url, 微信会跳转到redirect_uri并在地址栏上拼接code参数
 const appid='xx'; //微信的appid
 const redirect_uri='xx'; //微信的回调页面
 const url = https://open.weixin.qq.com/connect/oauth2/authorize?appid=appid&redirect_uri=redirect_uri&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+```
