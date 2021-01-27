@@ -1,6 +1,6 @@
 {
   "name": "persagy-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./lib/index.js",
   "private": false,
   "author": "wangyongcun <1006008051@qq.com>",

@@ -4,8 +4,7 @@
 import axios from 'axios';
 import * as colors from 'colors';
 const { log } = console;
-const OAPI = 'https://oapi.dingtalk.com';
-
+const OAPI = 'https://oapi.dingtalk.com'
 import {
     IToken,
 } from './interface';
@@ -13,24 +12,24 @@ import {
 class dingding {
     private appkey: string;
     private appsecret: string;
+    public proxy?: string;
     /**
      * 实例化小程序
      * @param appKey 小程序appKey
      * @param appSecret 小程序appSecret
-     * @param corpid 小程序corpid
-     * @param corpsecret 小程序corpsecret
     */
-    constructor(appkey: string, appsecret: string) {
+    constructor(appkey: string, appsecret: string, proxy = OAPI) {
         this.appkey = appkey;
         this.appsecret = appsecret
+        this.proxy = proxy
     }
     /**
    * 获取access_token 【注意】正常情况下access_token有效期为7200秒，有效期内重复获取返回相同结果，并自动续期。
    */
     async getAccessToken(): Promise<IToken> {
         log(colors.green(`==========获取access_token`));
-        const { appkey, appsecret } = this;
-        const { data } = await axios.get(`${OAPI}/gettoken?appkey=${appkey}&appsecret=${appsecret}`);
+        const { appkey, appsecret, proxy } = this;
+        const { data } = await axios.get(`${proxy}/gettoken?appkey=${appkey}&appsecret=${appsecret}`);
         return data;
     }
     /**
@@ -50,9 +49,10 @@ class dingding {
   * @param token access_token
   */
     async getUserId(code: string, token?: string) {
+        const { proxy } = this;
         log(colors.green(`===========获取用户ID`));
         token = token || (await this.getToken(token));
-        const { data } = await axios(`${OAPI}/user/getuserinfo?access_token=${token}&code=${code}`);
+        const { data } = await axios(`${proxy}/user/getuserinfo?access_token=${token}&code=${code}`);
         return data;
     }
     /**
@@ -66,8 +66,9 @@ class dingding {
         if (!token) return { errcode: 1, errmsg: 'token获取失败' }
         const userId_data = await this.getUserId(code, token);
         if (!userId_data.userid) return userId_data;
-        const {data} = await axios(
-            `${OAPI}/user/get?access_token=${token}&userid=${userId_data.userid}`
+        const { proxy } = this;
+        const { data } = await axios(
+            `${proxy}/user/get?access_token=${token}&userid=${userId_data.userid}`
         );
         return data;
     }
